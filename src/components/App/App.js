@@ -10,6 +10,7 @@ import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 
 import Items from '../Items/Items'
+import Item from '../Item/Item'
 
 class App extends Component {
   constructor () {
@@ -47,22 +48,27 @@ class App extends Component {
           <Route path='/sign-up' render={() => (
             <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />
-          <Route path='/sign-in' render={() => (
-            <SignIn msgAlert={this.msgAlert} setUser={this.setUser} />
-          )} />
           <AuthenticatedRoute user={user} path='/sign-out' render={() => (
             <SignOut msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
-          <AuthenticatedRoute user={user} path='/items' render={() => (
+          <AuthenticatedRoute user={user} exact path='/items' render={() => (
             <Items msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
           )} />
+          <AuthenticatedRoute user={user} path='/items/:id' render={({ match }) => (
+            <Item msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} match={match} />
+          )} />
         </main>
+        <SignIn msgAlert={this.msgAlert} setUser={this.setUser} user={this.state.user}/>
       </Fragment>
     )
   }
 }
 
 export default App
+
+// <Route path='/sign-in' render={() => (
+//   <SignIn msgAlert={this.msgAlert} setUser={this.setUser} />
+// )} />

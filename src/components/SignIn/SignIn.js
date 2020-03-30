@@ -33,7 +33,8 @@ class SignIn extends Component {
         message: messages.signInSuccess,
         variant: 'success'
       }))
-      .then(() => history.push('/'))
+      .then(() => history.push('/items'))
+      .then()
       .catch(error => {
         this.setState({ email: '', password: '' })
         msgAlert({
@@ -46,6 +47,10 @@ class SignIn extends Component {
 
   render () {
     const { email, password } = this.state
+
+    if (this.props.user) {
+      return null
+    }
 
     return (
       <div className="row">
