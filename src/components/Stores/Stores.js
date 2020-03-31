@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { Table, Modal, Button } from 'react-bootstrap'
+import { Table, Modal, Button, Spinner } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { indexStores, createStore, editStore, deleteStore } from '../../api/stores'
@@ -115,7 +115,26 @@ const Stores = props => {
 
   if (storesList === null) {
     return (
-      <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"/>
+      <Fragment>
+        <h1>Stores list</h1>
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Actions</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colSpan='2'>
+                <Spinner className='my-3 mx-auto d-block' animation="border" variant='primary' role="status">
+                  <span className="sr-only">Loading...</span>
+                </Spinner>
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </Fragment>
     )
   } else {
     return (
