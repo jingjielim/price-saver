@@ -11,7 +11,10 @@ import ChangePassword from '../ChangePassword/ChangePassword'
 
 import Items from '../Items/Items'
 import Item from '../Item/Item'
+import CreateItem from '../CreateItem/CreateItem'
+import EditItem from '../EditItem/EditItem'
 
+import Home from '../Home/Home'
 class App extends Component {
   constructor () {
     super()
@@ -57,8 +60,17 @@ class App extends Component {
           <AuthenticatedRoute user={user} exact path='/items' render={() => (
             <Items msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
           )} />
-          <AuthenticatedRoute user={user} path='/items/:id' render={({ match }) => (
-            <Item msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} match={match} />
+          <AuthenticatedRoute user={user} exact path='/items/:id' render={({ match }) => (
+            <Item msgAlert={this.msgAlert} user={user} match={match} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/items/:id/edit' render={({ match }) => (
+            <EditItem msgAlert={this.msgAlert} user={user} match={match} />
+          )} />
+          <AuthenticatedRoute user={user} path='/create-item' render={() => (
+            <CreateItem msgAlert={this.msgAlert} user={user}/>
+          )} />
+          <AuthenticatedRoute user={user} exact path='/home' render={() => (
+            <Home msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
           )} />
         </main>
         <SignIn msgAlert={this.msgAlert} setUser={this.setUser} user={this.state.user}/>
