@@ -9,12 +9,19 @@ import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+
 import Items from '../Items/Items'
 import Item from '../Item/Item'
 import CreateItem from '../CreateItem/CreateItem'
 import EditItem from '../EditItem/EditItem'
 
+import Stores from '../Stores/Stores'
+
 import Home from '../Home/Home'
+
+library.add(faTrashAlt)
 class App extends Component {
   constructor () {
     super()
@@ -71,6 +78,9 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} exact path='/home' render={() => (
             <Home msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/stores' render={() => (
+            <Stores msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
           )} />
         </main>
         <SignIn msgAlert={this.msgAlert} setUser={this.setUser} user={this.state.user}/>

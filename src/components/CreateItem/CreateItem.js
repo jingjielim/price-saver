@@ -1,7 +1,9 @@
 import React, { useState, Fragment } from 'react'
 import { Redirect } from 'react-router-dom'
+
 import ItemForm from '../ItemForm/ItemForm'
 import { createItem } from '../../api/items'
+import messages from '../AutoDismissAlert/messages'
 
 const CreateItem = props => {
   const [item, setItem] = useState({ name: '', unit: '' })
@@ -21,7 +23,16 @@ const CreateItem = props => {
       .then(res => {
         setCreatedId(res.data.item.id)
       })
-      .catch(console.error)
+      .then(() => props.msgAlert({
+        heading: 'Create Item Success',
+        message: messages.createItemSuccess,
+        variant: 'success'
+      }))
+      .catch(error => props.msgAlert({
+        heading: 'Create Item Failed with error: ' + error.message,
+        message: messages.createItemFailure,
+        variant: 'danger'
+      }))
   }
 
   const handleChange = event => {

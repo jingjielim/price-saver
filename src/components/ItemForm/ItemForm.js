@@ -1,22 +1,23 @@
 import React from 'react'
 
 const ItemForm = ({ item, handleSubmit, handleChange }) => (
-  <form onSubmit={handleSubmit}>
-    <label>Name</label>
+  <form className='form-inline' onSubmit={handleSubmit}>
+    <label className='mt-2 mr-2'>Name</label>
     <input
+      className='form-control mt-2 mr-2'
       placeholder='Milk'
       name='name'
       value={item.name}
       onChange={handleChange}
     />
-    <label>Unit</label>
-    <input
+    <label className='mt-2 mr-2'>Unit</label>
+    <input className='form-control mt-2 mr-2'
       placeholder='gal'
       name='unit'
       value={item.unit}
       onChange={handleChange}
     />
-    <button type='submit'>Add Item</button>
+    <button className='btn btn-info mt-2' type='submit'>Submit</button>
   </form>
 )
 

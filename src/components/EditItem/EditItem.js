@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react'
 import { Redirect } from 'react-router-dom'
 import ItemForm from '../ItemForm/ItemForm'
 import { editItem, showItem } from '../../api/items'
+import messages from '../AutoDismissAlert/messages'
 
 const EditItem = props => {
   const [item, setItem] = useState({ name: '', unit: '' })
@@ -27,7 +28,11 @@ const EditItem = props => {
       .then(res => {
         setEdited(true)
       })
-      .catch(console.error)
+      .catch(error => props.msgAlert({
+        heading: 'Edit Item Failed with error: ' + error.message,
+        message: messages.editItemFailure,
+        variant: 'danger'
+      }))
   }
 
   const handleChange = event => {

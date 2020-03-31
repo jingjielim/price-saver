@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { Link, Redirect } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
 import { showItem, deleteItem } from '../../api/items'
+import messages from '../AutoDismissAlert/messages'
 
 const Item = props => {
   const [deleted, setDeleted] = useState(false)
@@ -41,9 +43,11 @@ const Item = props => {
           )
         }
       })
-      .catch(res => {
-        console.log(res)
-      })
+      .catch(error => props.msgAlert({
+        heading: 'Retrieval failure ' + error.message,
+        message: messages.showItemFailure,
+        variant: 'danger'
+      }))
   }, [])
 
   const handleDelete = (event) => {
@@ -52,7 +56,11 @@ const Item = props => {
       .then(() => {
         setDeleted(true)
       })
-      .catch(console.error)
+      .catch(error => props.msgAlert({
+        heading: 'Deletion Failed with error: ' + error.message,
+        message: messages.deleteItemFailure,
+        variant: 'danger'
+      }))
   }
 
   if (deleted) {
@@ -70,7 +78,7 @@ const Item = props => {
           <button>Edit</button>
         </Link>
         <button data-id={item.id} onClick={handleDelete}>Delete</button>
-        <table>
+        <Table striped bordered hover size="sm">
           <thead>
             <tr>
               <th>Store</th>
@@ -80,7 +88,7 @@ const Item = props => {
           <tbody>
             {priceTable}
           </tbody>
-        </table>
+        </Table >
       </div>
     )
   }
