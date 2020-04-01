@@ -18,7 +18,6 @@ const Item = props => {
   useEffect(() => {
     showItem(props.user, props.match.params.id)
       .then(res => {
-        console.log(res)
         const { item } = res.data
         setItem(item)
         if (item.prices.length > 0) {

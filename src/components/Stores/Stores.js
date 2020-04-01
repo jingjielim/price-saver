@@ -25,10 +25,6 @@ const Stores = props => {
                 <td>
                   <input
                     autoFocus
-                    onBlur={() => {
-                      setEditId(null)
-                      setEditedStore({ name: '' })
-                    }}
                     autoComplete='off'
                     value={editedStore.name}
                     name='name'
@@ -44,9 +40,15 @@ const Stores = props => {
           }
           return (
             <tr key={store.id} >
-              <td onClick={() => handleClick(store.id, store.name)}>{store.name}</td>
+              <td onClick={() => {
+                if (store.editable) {
+                  handleClick(store.id, store.name)
+                }
+              }}>{store.name}</td>
               <td>
-                <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(store.id, store.name)}/>
+                {
+                  store.editable ? <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(store.id, store.name)}/> : null
+                }
               </td>
             </tr>
           )
@@ -76,9 +78,21 @@ const Stores = props => {
         setChange(state => !state)
         setEditedStore({ name: '' })
       })
-      .catch(
-        console.error
-      )
+      .catch(error => {
+        if (error.response) {
+          error = error.response.data
+          let message = ''
+          for (const key in error) {
+            message = message.concat(`${error[key]} `)
+          }
+          error.message = message
+        }
+        props.msgAlert({
+          heading: 'Edit Store failed with error: ' + error.message,
+          message: messages.editStoreFailure,
+          variant: 'danger'
+        })
+      })
   }
 
   const handleCreateChange = event => {
@@ -91,9 +105,21 @@ const Stores = props => {
         setChange(state => !state)
         setNewStore({ name: '' })
       })
-      .catch(
-        console.error
-      )
+      .catch(error => {
+        if (error.response) {
+          error = error.response.data
+          let message = ''
+          for (const key in error) {
+            message = message.concat(`${error[key]} `)
+          }
+          error.message = message
+        }
+        props.msgAlert({
+          heading: 'Create Store failed with error: ' + error.message,
+          message: messages.createStoreFailure,
+          variant: 'danger'
+        })
+      })
   }
 
   const handleAskDelete = (id, name) => {
@@ -108,7 +134,11 @@ const Stores = props => {
         setStoreToDelete({ id: '', name: '' })
         setChange(state => !state)
       })
-      .catch(console.error)
+      .catch(error => props.msgAlert({
+        heading: 'Delete Store Failed with error: ' + error.message,
+        message: messages.deleteStoreFailure,
+        variant: 'danger'
+      }))
   }
 
   const handleClose = () => setShow(false)
@@ -152,6 +182,10 @@ const Stores = props => {
             <tr>
               <td>
                 <input
+                  onFocus={() => {
+                    setEditId(null)
+                    setEditedStore({ name: '', unit: '' })
+                  }}
                   autoComplete='off'
                   className='border-0 bg-transparent'
                   value={newStore.name}
@@ -162,7 +196,7 @@ const Stores = props => {
                 />
               </td>
               <td>
-                <Button variant='primary' size='sm'>Submit</Button>
+                <Button onClick={handleCreate} variant='primary' size='sm'>Submit</Button>
               </td>
             </tr>
           </tbody>

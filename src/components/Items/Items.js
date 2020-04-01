@@ -43,17 +43,27 @@ const Items = props => {
                   />
                 </td>
                 <td>
-                  <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(item.id, item.name)}/>
+                  <Button onClick={handleEdit} variant='primary' size='sm'>Submit</Button>
                 </td>
               </tr>
             )
           }
           return (
             <tr key={item.id}>
-              <td onClick={() => handleClick(item.id, item.name, item.unit)}>{item.name}</td>
-              <td onClick={() => handleClick(item.id, item.name, item.unit)}>{item.unit}</td>
+              <td onClick={() => {
+                if (item.editable) {
+                  handleClick(item.id, item.name, item.unit)
+                }
+              }}>{item.name}</td>
+              <td onClick={() => {
+                if (item.editable) {
+                  handleClick(item.id, item.name, item.unit)
+                }
+              }}>{item.unit}</td>
               <td>
-                <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(item.id, item.name)}/>
+                {
+                  item.editable ? <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(item.id, item.name)}/> : null
+                }
               </td>
             </tr>
           )
@@ -86,9 +96,18 @@ const Items = props => {
         setChange(state => !state)
         setEditedItem({ name: '', unit: '' })
       })
-      .catch(
-        console.error
-      )
+      .catch(error => {
+        error = error.response.data
+        let message = ''
+        for (const key in error) {
+          message = message.concat(`${error[key]} `)
+        }
+        props.msgAlert({
+          heading: 'Edit Item failed with message: ',
+          message: message,
+          variant: 'danger'
+        })
+      })
   }
 
   const handleCreateChange = event => {
@@ -104,9 +123,18 @@ const Items = props => {
         setChange(state => !state)
         setNewItem({ name: '', unit: '' })
       })
-      .catch(
-        console.error
-      )
+      .catch(error => {
+        error = error.response.data
+        let message = ''
+        for (const key in error) {
+          message = message.concat(`${error[key]} `)
+        }
+        props.msgAlert({
+          heading: 'Create Item failed with message: ',
+          message: message,
+          variant: 'danger'
+        })
+      })
   }
 
   const handleAskDelete = (id, name, unit) => {
@@ -121,7 +149,11 @@ const Items = props => {
         setItemToDelete({ id: '', name: '', unit: '' })
         setChange(state => !state)
       })
-      .catch(console.error)
+      .catch(error => props.msgAlert({
+        heading: 'Delete Item Failed with error: ' + error.message,
+        message: messages.deleteItemFailure,
+        variant: 'danger'
+      }))
   }
 
   const handleClose = () => setShow(false)
@@ -178,6 +210,10 @@ const Items = props => {
               </td>
               <td>
                 <input
+                  onFocus={() => {
+                    setEditId(null)
+                    setEditedItem({ name: '', unit: '' })
+                  }}
                   autoComplete='off'
                   className='border-0 bg-transparent'
                   value={newItem.unit}
@@ -188,7 +224,7 @@ const Items = props => {
                 />
               </td>
               <td>
-                <Button variant='primary' size='sm'>Submit</Button>
+                <Button onClick={handleCreate} variant='primary' size='sm'>Submit</Button>
               </td>
             </tr>
           </tbody>

@@ -11,5 +11,9 @@ export default {
   editItemFailure: 'Unable to edit item',
   deleteItemFailure: 'Unable to delete item',
   showItemFailure: 'Failed to retrieve item',
+  createStoreFailure: 'Unable to add store',
+  editStoreFailure: 'Unable to edit store',
+  deleteStoreFailure: 'Unable to delete store',
+  showStoreFailure: 'Failed to retrieve store',
   homeFailure: 'Failed to load homepage items'
 }

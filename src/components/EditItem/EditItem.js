@@ -11,20 +11,16 @@ const EditItem = props => {
   useEffect(() => {
     showItem(props.user, props.match.params.id)
       .then(res => setItem({ name: res.data.item.name, unit: res.data.item.unit }))
-      .catch(console.error)
+      .catch(error => props.msgAlert({
+        heading: 'Get Item Failed with error: ' + error.message,
+        message: messages.showItemFailure,
+        variant: 'danger'
+      }))
   }, [])
-
-  const capitalize = (str) => {
-    return str.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-    })
-  }
 
   const handleSubmit = event => {
     event.preventDefault()
-    const name = capitalize(item.name)
-    const unit = item.unit.toLowerCase()
-    editItem(props.user, { name, unit }, props.match.params.id)
+    editItem(props.user, { name: item.name, unit: item.unit }, props.match.params.id)
       .then(res => {
         setEdited(true)
       })
