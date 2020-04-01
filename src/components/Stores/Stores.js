@@ -6,6 +6,7 @@ import { indexStores, createStore, editStore, deleteStore } from '../../api/stor
 import messages from '../AutoDismissAlert/messages'
 
 const Stores = props => {
+  const [stores, setStores] = useState([])
   const [storesList, setStoresList] = useState(null)
   const [newStore, setNewStore] = useState({ name: '' })
   const [editedStore, setEditedStore] = useState({ name: '' })
@@ -18,49 +19,53 @@ const Stores = props => {
     indexStores(props.user)
       .then(res => {
         const { stores } = res.data
-        const list = stores.map(store => {
-          if (store.id === editId) {
-            return (
-              <tr key={store.id}>
-                <td>
-                  <input
-                    autoFocus
-                    autoComplete='off'
-                    value={editedStore.name}
-                    name='name'
-                    onChange={handleEditChange}
-                    onKeyPress={event => event.key === 'Enter' ? handleEdit(event) : null}
-                  />
-                </td>
-                <td>
-                  <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(store.id, store.name)}/>
-                </td>
-              </tr>
-            )
-          }
-          return (
-            <tr key={store.id} >
-              <td onClick={() => {
-                if (store.editable) {
-                  handleClick(store.id, store.name)
-                }
-              }}>{store.name}</td>
-              <td>
-                {
-                  store.editable ? <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(store.id, store.name)}/> : null
-                }
-              </td>
-            </tr>
-          )
-        })
-        setStoresList(list)
+        setStores(stores)
       })
       .catch(error => props.msgAlert({
         heading: 'Load Stores Failure ' + error.message,
         message: messages.indexStoresFailure,
         variant: 'danger'
       }))
-  }, [change, editedStore])
+  }, [change])
+
+  useEffect(() => {
+    const list = stores.map(store => {
+      if (store.id === editId) {
+        return (
+          <tr key={store.id}>
+            <td>
+              <input
+                autoFocus
+                autoComplete='off'
+                value={editedStore.name}
+                name='name'
+                onChange={handleEditChange}
+                onKeyPress={event => event.key === 'Enter' ? handleEdit(event) : null}
+              />
+            </td>
+            <td>
+              <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(store.id, store.name)}/>
+            </td>
+          </tr>
+        )
+      }
+      return (
+        <tr key={store.id} >
+          <td onClick={() => {
+            if (store.editable) {
+              handleClick(store.id, store.name)
+            }
+          }}>{store.name}</td>
+          <td>
+            {
+              store.editable ? <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(store.id, store.name)}/> : null
+            }
+          </td>
+        </tr>
+      )
+    })
+    setStoresList(list)
+  }, [stores, editedStore])
 
   const handleClick = (id, name) => {
     setEditId(id)

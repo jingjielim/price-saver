@@ -7,6 +7,7 @@ import { indexItems, createItem, editItem, deleteItem } from '../../api/items'
 import messages from '../AutoDismissAlert/messages'
 
 const Items = props => {
+  const [items, setItems] = useState([])
   const [itemsList, setItemsList] = useState(null)
   const [newItem, setNewItem] = useState({ name: '', unit: '' })
   const [editedItem, setEditedItem] = useState({ name: '', unit: '' })
@@ -19,63 +20,67 @@ const Items = props => {
     indexItems(props.user)
       .then(res => {
         const { items } = res.data
-        const list = items.map(item => {
-          if (item.id === editId) {
-            return (
-              <tr key={item.id}>
-                <td>
-                  <input
-                    autoFocus
-                    autoComplete='off'
-                    value={editedItem.name}
-                    name='name'
-                    onChange={handleEditChange}
-                    onKeyPress={event => event.key === 'Enter' ? handleEdit(event) : null}
-                  />
-                </td>
-                <td>
-                  <input
-                    autoComplete='off'
-                    value={editedItem.unit}
-                    name='unit'
-                    onChange={handleEditChange}
-                    onKeyPress={event => event.key === 'Enter' ? handleEdit(event) : null}
-                  />
-                </td>
-                <td>
-                  <Button onClick={handleEdit} variant='primary' size='sm'>Submit</Button>
-                </td>
-              </tr>
-            )
-          }
-          return (
-            <tr key={item.id}>
-              <td onClick={() => {
-                if (item.editable) {
-                  handleClick(item.id, item.name, item.unit)
-                }
-              }}>{item.name}</td>
-              <td onClick={() => {
-                if (item.editable) {
-                  handleClick(item.id, item.name, item.unit)
-                }
-              }}>{item.unit}</td>
-              <td>
-                {
-                  item.editable ? <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(item.id, item.name)}/> : null
-                }
-              </td>
-            </tr>
-          )
-        })
-        setItemsList(list)
+        setItems(items)
       })
       .catch(error => props.msgAlert({
         heading: 'Load Items Failure ' + error.message,
         message: messages.indexItemsFailure,
         variant: 'danger'
       }))
-  }, [change, editedItem])
+  }, [change])
+
+  useEffect(() => {
+    const list = items.map(item => {
+      if (item.id === editId) {
+        return (
+          <tr key={item.id}>
+            <td>
+              <input
+                autoFocus
+                autoComplete='off'
+                value={editedItem.name}
+                name='name'
+                onChange={handleEditChange}
+                onKeyPress={event => event.key === 'Enter' ? handleEdit(event) : null}
+              />
+            </td>
+            <td>
+              <input
+                autoComplete='off'
+                value={editedItem.unit}
+                name='unit'
+                onChange={handleEditChange}
+                onKeyPress={event => event.key === 'Enter' ? handleEdit(event) : null}
+              />
+            </td>
+            <td>
+              <Button onClick={handleEdit} variant='primary' size='sm'>Submit</Button>
+            </td>
+          </tr>
+        )
+      }
+      return (
+        <tr key={item.id}>
+          <td onClick={() => {
+            if (item.editable) {
+              handleClick(item.id, item.name, item.unit)
+            }
+          }}>{item.name}</td>
+          <td onClick={() => {
+            if (item.editable) {
+              handleClick(item.id, item.name, item.unit)
+            }
+          }}>{item.unit}</td>
+          <td>
+            {
+              item.editable ? <FontAwesomeIcon icon='trash-alt' className='text-danger' onClick={() => handleAskDelete(item.id, item.name)}/> : null
+            }
+          </td>
+        </tr>
+      )
+    })
+    setItemsList(list)
+  }, [items, editedItem])
 
   const handleClick = (id, name, unit) => {
     setEditId(id)
