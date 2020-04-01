@@ -2,5 +2,12 @@ $primary: #111e6c;
 $danger: #b80f0a;
 
 @import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
 
+body {
+  font-family: 'Open Sans', sans-serif;
+}
 
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+}
