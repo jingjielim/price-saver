@@ -1,0 +1,12 @@
+.search-bar {
+  max-width: 400px;
+}
+
+@media (max-width: 500px) {
+  .filter-words {
+    display: block;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+  }
+}

@@ -1,92 +1,110 @@
 import React, { useState, useEffect, Fragment } from 'react'
-import { Link } from 'react-router-dom'
-import { indexItems, deleteItem } from '../../api/items'
-
+import { Spinner } from 'react-bootstrap'
+import { indexItems } from '../../api/items'
+import { indexStores } from '../../api/stores'
+import HomeCard from '../HomeCard/HomeCard'
+import HomeButtons from '../HomeButtons/HomeButtons'
+import CreatePrice from '../CreatePrice/CreatePrice'
 import messages from '../AutoDismissAlert/messages'
-
+import './Home.css'
 const Home = props => {
-  const [itemsList, setItemsList] = useState(null)
-  const [deleted, setDeleted] = useState(0)
-  const [storeFilter, setStoreFilter] = useState(null)
-
+  const [items, setItems] = useState([])
+  const [cards, setCards] = useState(null)
+  const [change, setChange] = useState(false)
+  const [storeFilter, setStoreFilter] = useState('all')
+  const [searchValue, setSearchValue] = useState('')
+  const [searchRegex, setSearchRegex] = useState(/(?:)/)
+  const [stores, setStores] = useState(null)
+  // Get list of stores
+  useEffect(() => {
+    indexStores(props.user)
+      .then(res => {
+        const { stores } = res.data
+        console.log(stores)
+        setStores(stores.map(store => store.name))
+      })
+      .catch(error => props.msgAlert({
+        heading: 'Load Stores Failure ' + error.message,
+        message: messages.indexStoresFailure,
+        variant: 'danger'
+      }))
+  }, [change])
+  // Get list of items with their price lists
   useEffect(() => {
     indexItems(props.user)
       .then(res => {
-        const itemsList = res.data.items.map(item => {
-          if (item.lowest.price) {
-            if (storeFilter === null || (storeFilter && item.lowest.store === storeFilter)) {
-              return (
-                <div key={item.id}>
-                  <Link to={`/items/${item.id}`}>
-                    <h3>{item.name}</h3>
-                  </Link>
-                  <h5>Lowest price: {`$${item.lowest.price}` || 'No prices yet'}/{item.unit}</h5>
-                  <p>{item.lowest.store || ''}</p>
-                  <Link to={`/items/${item.id}/edit`}>
-                    <button>Edit</button>
-                  </Link>
-                  <button data-id={item.id} onClick={handleDelete}>Delete</button>
-                </div>
-              )
-            }
-          } else if (storeFilter === null) {
-            return (
-              <div key={item.id}>
-                <Link to={`/items/${item.id}`}>
-                  <h3>{item.name}</h3>
-                </Link>
-                <h5>No price available</h5>
-                <Link to={`/items/${item.id}/edit`}>
-                  <button>Edit</button>
-                </Link>
-                <button data-id={item.id} onClick={handleDelete}>Delete</button>
-              </div>
-            )
-          }
-        })
-        setItemsList(itemsList)
+        const { items } = res.data
+        setItems(items)
       })
       .catch(error => props.msgAlert({
         heading: 'Load Home Page Failure ' + error.message,
         message: messages.homeFailure,
         variant: 'danger'
       }))
-  }, [deleted, storeFilter])
+  }, [change])
+  // Put each item into cards, refresh when items, storefilter or searchValue changes
+  useEffect(() => {
+    const cards = items.map(item => {
+      return <HomeCard key={item.id} item={item} storeFilter={storeFilter} searchValue={searchValue} searchRegex={searchRegex} />
+    })
+    setCards(cards)
+  }, [items, storeFilter, searchValue])
 
-  const handleDelete = (event) => {
-    const itemId = event.target.getAttribute('data-id')
-    deleteItem(props.user, itemId)
-      .then(() => {
-        setDeleted(deleted => deleted + 1)
-      })
-      .catch(error => props.msgAlert({
-        heading: 'Deletion Failed with error: ' + error.message,
-        message: messages.deleteItemFailure,
-        variant: 'danger'
-      }))
-  }
-
+  // handle deleting of items
+  // const handleDelete = (event) => {
+  //   const itemId = event.target.getAttribute('data-id')
+  //   deleteItem(props.user, itemId)
+  //     .then(() => {
+  //       setDeleted(deleted => deleted + 1)
+  //     })
+  //     .catch(error => props.msgAlert({
+  //       heading: 'Deletion Failed with error: ' + error.message,
+  //       message: messages.deleteItemFailure,
+  //       variant: 'danger'
+  //     }))
+  // }
+  // handle change in store filter
   const handleStoreFilter = event => {
-    const filter = event.target.name
-    if (filter === 'null') {
-      setStoreFilter(null)
-    } else {
-      setStoreFilter(filter)
+    const btnElements = document.getElementsByTagName('button')
+    for (const element of btnElements) {
+      element.classList.remove('selected')
     }
+    const filter = event.target.name
+    setStoreFilter(filter)
+    document.getElementById(filter).classList.add('selected')
   }
 
-  if (itemsList === null) {
+  const handleSearchChange = event => {
+    const searchValue = event.target.value
+    const regex = new RegExp(searchValue, 'i')
+    setSearchValue(searchValue)
+    setSearchRegex(regex)
+  }
+
+  if (cards === null || stores === null) {
     return (
-      <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"/>
+      <Spinner className='m-auto d-block' animation="border" variant='primary' role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
     )
   } else {
     return (
       <Fragment>
-        <button onClick={handleStoreFilter} name="null">All</button>
-        <button onClick={handleStoreFilter} name="HMART">HMART</button>
-        <button onClick={handleStoreFilter} name="CMART">CMART</button>
-        <button onClick={handleStoreFilter} name="Whole Foods">Whole Foods</button>
-        {itemsList}
+        <div className='container'>
+          <div className='row d-flex justify-content-center'>
+            <CreatePrice user={props.user} msgAlert={props.msgAlert} setChange={setChange}/>
+          </div>
+          <div className='row d-flex justify-content-center align-items-center'>
+            <div className='mt-3 mr-1 mb-0 filter-words'>Cheapest items at:</div>
+            <HomeButtons stores={stores} handleStoreFilter={handleStoreFilter}/>
+          </div>
+          <div className='row justify-content-center'>
+            <input className='form-control form-control-sm mt-3 mr-1 search-bar' onChange={handleSearchChange} placeholder='Search items' value={searchValue} />
+          </div>
+          <div className='row'>
+            {cards}
+          </div>
+        </div>
       </Fragment>
     )
   }

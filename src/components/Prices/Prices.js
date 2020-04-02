@@ -4,6 +4,7 @@ import CreatePrice from '../CreatePrice/CreatePrice'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { indexPrices } from '../../api/prices'
 import { indexStores } from '../../api/stores'
+import messages from '../AutoDismissAlert/messages'
 
 const Prices = props => {
   const [itemPriceTable, setItemPriceTable] = useState([])
@@ -16,9 +17,11 @@ const Prices = props => {
       .then(res => {
         setItemPriceTable(res.data)
       })
-      .catch(res => {
-        console.error(res.response.data)
-      })
+      .catch(error => props.msgAlert({
+        heading: 'Load Prices Failure ' + error.message,
+        message: messages.indexPricesFailure,
+        variant: 'danger'
+      }))
   }, [change])
 
   useEffect(() => {
@@ -28,7 +31,11 @@ const Prices = props => {
         const tableHeaders = stores.map(store => <td key= {store.id}>{store.name}</td>)
         setTableHeaders(tableHeaders)
       })
-      .catch(console.error)
+      .catch(error => props.msgAlert({
+        heading: 'Load Stores Failure ' + error.message,
+        message: messages.indexStoresFailure,
+        variant: 'danger'
+      }))
   }, [change])
 
   const rowStoreValues = (stores) => {
@@ -63,7 +70,8 @@ const Prices = props => {
     return (
       <Fragment>
         <h1>Price list</h1>
-        <Table striped bordered hover size="sm">
+        <CreatePrice user={props.user} msgAlert={props.msgAlert} setChange={setChange}/>
+        <Table responsive striped bordered hover size="sm">
           <thead>
             <tr>
               <td>Item Name</td>
@@ -74,7 +82,6 @@ const Prices = props => {
             {priceList}
           </tbody>
         </Table>
-        <CreatePrice user={props.user} msgAlert={props.msgAlert} setChange={setChange}/>
       </Fragment>
     )
   }

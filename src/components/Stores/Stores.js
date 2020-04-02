@@ -152,7 +152,7 @@ const Stores = props => {
     return (
       <Fragment>
         <h1>Store list</h1>
-        <Table striped bordered hover size="sm">
+        <Table responsive striped bordered hover size="sm">
           <thead>
             <tr>
               <td>Name</td>
@@ -175,7 +175,7 @@ const Stores = props => {
     return (
       <Fragment>
         <h1>Stores list</h1>
-        <Table striped bordered hover size="sm">
+        <Table responsive striped bordered hover size="sm">
           <thead>
             <tr>
               <td>Name</td>

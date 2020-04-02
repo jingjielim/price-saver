@@ -6,11 +6,11 @@ import { indexStores } from '../../api/stores'
 import messages from '../AutoDismissAlert/messages'
 
 const CreatePrice = props => {
-  // const [price, setPrice] = useState({ value: '', store_name: '', item_name: '' })
+  const [price, setPrice] = useState({ value: '', store_name: '', item_name: '' })
   const [storeNames, setStoreNames] = useState([])
   const [itemNames, setItemNames] = useState([])
   const [created, setCreated] = useState(false)
-
+  const [submitted, setSubmitted] = useState(false)
   useEffect(() => {
     indexItems(props.user)
       .then(res => {
@@ -18,6 +18,11 @@ const CreatePrice = props => {
         const itemNames = items.map(item => item.name)
         setItemNames(itemNames)
       })
+      .catch(error => props.msgAlert({
+        heading: 'Load Items Failure ' + error.message,
+        message: messages.indexItemsFailure,
+        variant: 'danger'
+      }))
   }, [created])
 
   useEffect(() => {
@@ -27,50 +32,67 @@ const CreatePrice = props => {
         const storeNames = stores.map(store => store.name)
         setStoreNames(storeNames)
       })
+      .catch(error => props.msgAlert({
+        heading: 'Load Stores Failure ' + error.message,
+        message: messages.indexStoresFailure,
+        variant: 'danger'
+      }))
   }, [created])
 
   const handleSubmit = event => {
     event.preventDefault()
+    setSubmitted(true)
     const form = document.getElementsByTagName('input')
     const newPrice = {}
     for (let i = 0; i < form.length; i++) {
       newPrice[form[i].name] = form[i].value
+      form[i].value = ''
     }
     createPrice(props.user, newPrice)
       .then(res => {
         setCreated(created => !created)
         props.setChange(change => !change)
-        // setPrice({ value: '', store_name: '', item_name: '' })
-        document.getElementsByTagName('form')[0].reset()
+        setSubmitted(false)
       })
       .then(() => props.msgAlert({
-        heading: 'Create Price Success',
-        message: messages.createItemSuccess,
+        heading: 'Add Price Success',
+        message: messages.createPriceSuccess,
         variant: 'success'
       }))
       .catch(error => {
-        console.log(error.response.data)
+        const { data } = error.response || false
+        if (data) {
+          let message = ''
+          for (const key in data) {
+            if (data[key].length > 1) {
+              message = message.concat(key + ' ')
+              data[key].forEach(str => {
+                message = message.concat(str + ' ')
+              })
+            }
+          }
+          error.message = message
+        }
         props.msgAlert({
           heading: 'Create Price Failed with error: ' + error.message,
-          message: messages.createItemFailure,
+          message: messages.createPriceFailure,
           variant: 'danger'
         })
       })
   }
 
-  // const handleChange = event => {
-  //   const updatedField = {
-  //     [event.target.name]: event.target.value
-  //   }
-  //   console.log(updatedField)
-  //   const editedPrice = Object.assign({}, price, updatedField)
-  //   setPrice(editedPrice)
-  // }
+  const handleChange = event => {
+    const updatedField = {
+      [event.target.name]: event.target.value
+    }
+    console.log(updatedField)
+    const editedPrice = Object.assign({}, price, updatedField)
+    setPrice(editedPrice)
+  }
 
   return (
     <Fragment>
-      <h1>Create Item</h1>
-      <PriceForm /* price={price}  handleChange={handleChange} */ handleSubmit={handleSubmit} storeNames={storeNames} itemNames={itemNames} />
+      <PriceForm submitted={submitted} price={price} handleChange={handleChange} handleSubmit={handleSubmit} storeNames={storeNames} itemNames={itemNames} />
     </Fragment>
   )
 }

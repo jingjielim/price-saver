@@ -101,14 +101,18 @@ const Items = props => {
         setEditedItem({ name: '', unit: '' })
       })
       .catch(error => {
-        error = error.response.data
-        let message = ''
-        for (const key in error) {
-          message = message.concat(`${error[key]} `)
+        if (error.response) {
+          const data = error.response.data
+          let message = ''
+          for (const key in data) {
+            message = message.concat(`${data[key]} `)
+          }
+          error.message = message
         }
+
         props.msgAlert({
-          heading: 'Edit Item failed with message: ',
-          message: message,
+          heading: 'Edit Item failed with Error: ' + error.message,
+          message: messages.editItemFailure,
           variant: 'danger'
         })
       })
@@ -128,14 +132,17 @@ const Items = props => {
         setNewItem({ name: '', unit: '' })
       })
       .catch(error => {
-        error = error.response.data
-        let message = ''
-        for (const key in error) {
-          message = message.concat(`${error[key]} `)
+        if (error.response) {
+          const data = error.response.data
+          let message = ''
+          for (const key in data) {
+            message = message.concat(`${data[key]} `)
+          }
+          error.message = message
         }
         props.msgAlert({
-          heading: 'Create Item failed with message: ',
-          message: message,
+          heading: 'Create Item failed with Error: ' + error.message,
+          message: messages.createItemFailure,
           variant: 'danger'
         })
       })
@@ -166,7 +173,7 @@ const Items = props => {
     return (
       <Fragment>
         <h1>Stores list</h1>
-        <Table striped bordered hover size="sm">
+        <Table responsive striped bordered hover size="sm">
           <thead>
             <tr>
               <td>Name</td>
@@ -190,7 +197,7 @@ const Items = props => {
     return (
       <Fragment>
         <h1>Items list</h1>
-        <Table striped bordered hover size="sm">
+        <Table responsive striped bordered hover size="sm">
           <thead>
             <tr>
               <td>Name</td>

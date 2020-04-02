@@ -77,7 +77,7 @@ const Item = props => {
           <button>Edit</button>
         </Link>
         <button data-id={item.id} onClick={handleDelete}>Delete</button>
-        <Table striped bordered hover size="sm">
+        <Table responsive striped bordered hover size="sm">
           <thead>
             <tr>
               <th>Store</th>
