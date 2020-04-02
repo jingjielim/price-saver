@@ -36,7 +36,6 @@ const Items = props => {
           <tr key={item.id}>
             <td>
               <input
-                autoFocus
                 autoComplete='off'
                 value={editedItem.name}
                 name='name'

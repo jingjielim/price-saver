@@ -4,6 +4,7 @@ const ItemForm = ({ item, handleSubmit, handleChange }) => (
   <form className='form-inline' onSubmit={handleSubmit}>
     <label className='mt-2 mr-2'>Name</label>
     <input
+      required
       className='form-control mt-2 mr-2'
       placeholder='Milk'
       name='name'
@@ -11,7 +12,9 @@ const ItemForm = ({ item, handleSubmit, handleChange }) => (
       onChange={handleChange}
     />
     <label className='mt-2 mr-2'>Unit</label>
-    <input className='form-control mt-2 mr-2'
+    <input
+      required
+      className='form-control mt-2 mr-2'
       placeholder='gal'
       name='unit'
       value={item.unit}

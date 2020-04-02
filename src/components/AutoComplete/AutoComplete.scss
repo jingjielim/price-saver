@@ -1,0 +1,69 @@
+.input-body {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  width: auto;
+}
+
+.no-suggestions {
+  display: block;
+  width: auto;
+  vertical-align: middle;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+  margin-right: 0.5rem !important;
+  border: 1px solid #ced4da;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  background-color: #fff;
+  background-clip: padding-box;
+  border-top-width: 0;
+  box-sizing: border-box;
+  color: #999;
+  z-index: 10;
+  position: absolute;
+  top: 40px;
+  left: 0;
+}
+
+.suggestions {
+  display: block;
+  width: auto;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+  margin-right: 0.5rem !important;
+  border: 1px solid #ced4da;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  background-color: #fff;
+  list-style: none;
+  border-top-width: 0;
+  box-sizing: border-box;
+  max-height: 143px;
+  overflow-y: auto;
+  z-index: 10;
+  position: absolute;
+  top: 40px;
+  left: 0;
+}
+
+.suggestions li {
+  padding: 0.5rem;
+}
+
+.suggestion-active,
+.suggestions li:hover {
+  background-color: #111e6c;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.suggestions li:not(:last-of-type) {
+  border-bottom: 1px solid #999;
+}

@@ -9,17 +9,10 @@ const CreateItem = props => {
   const [item, setItem] = useState({ name: '', unit: '' })
   const [createdId, setCreatedId] = useState(null)
 
-  const capitalize = (str) => {
-    return str.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-    })
-  }
-
   const handleSubmit = event => {
     event.preventDefault()
-    const name = capitalize(item.name)
-    const unit = item.unit.toLowerCase()
-    createItem(props.user, { name, unit })
+
+    createItem(props.user, item)
       .then(res => {
         setCreatedId(res.data.item.id)
       })

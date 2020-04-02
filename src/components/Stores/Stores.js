@@ -151,7 +151,7 @@ const Stores = props => {
   if (storesList === null) {
     return (
       <Fragment>
-        <h1>Stores list</h1>
+        <h1>Store list</h1>
         <Table striped bordered hover size="sm">
           <thead>
             <tr>

@@ -18,7 +18,8 @@ import CreateItem from '../CreateItem/CreateItem'
 import EditItem from '../EditItem/EditItem'
 
 import Stores from '../Stores/Stores'
-
+import Prices from '../Prices/Prices'
+// import CreatePrices from '../CreatePrice/CreatePrice'
 import Home from '../Home/Home'
 
 library.add(faTrashAlt)
@@ -55,6 +56,9 @@ class App extends Component {
           />
         ))}
         <main className="container">
+          <Route exact path='/' render={() => (
+            <SignIn msgAlert={this.msgAlert} setUser={this.setUser} user={this.state.user}/>
+          )} />
           <Route path='/sign-up' render={() => (
             <SignUp msgAlert={this.msgAlert} setUser={this.setUser} />
           )} />
@@ -63,6 +67,9 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword msgAlert={this.msgAlert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} exact path='/home' render={() => (
+            <Home msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
           )} />
           <AuthenticatedRoute user={user} exact path='/items' render={() => (
             <Items msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
@@ -76,14 +83,13 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/create-item' render={() => (
             <CreateItem msgAlert={this.msgAlert} user={user}/>
           )} />
-          <AuthenticatedRoute user={user} exact path='/home' render={() => (
-            <Home msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
-          )} />
           <AuthenticatedRoute user={user} exact path='/stores' render={() => (
             <Stores msgAlert={this.msgAlert} clearUser={this.clearUser} user={user} />
           )} />
+          <AuthenticatedRoute user={user} exact path='/prices' render={() => (
+            <Prices msgAlert={this.msgAlert} user={user} />
+          )} />
         </main>
-        <SignIn msgAlert={this.msgAlert} setUser={this.setUser} user={this.state.user}/>
       </Fragment>
     )
   }
