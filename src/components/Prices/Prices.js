@@ -15,7 +15,12 @@ const Prices = props => {
   useEffect(() => {
     indexPrices(props.user)
       .then(res => {
-        setItemPriceTable(res.data)
+        if (res.data !== ' ') {
+          setItemPriceTable(res.data)
+        } else {
+          setItemPriceTable([])
+          setPriceList([])
+        }
       })
       .catch(error => props.msgAlert({
         heading: 'Load Prices Failure ' + error.message,
@@ -49,15 +54,17 @@ const Prices = props => {
   }
 
   useEffect(() => {
-    const list = itemPriceTable.map(item => {
-      return (
-        <tr key={item.name}>
-          <td>{item.name}</td>
-          {rowStoreValues(item.stores)}
-        </tr>
-      )
-    })
-    setPriceList(list)
+    if (itemPriceTable.length > 0) {
+      const list = itemPriceTable.map(item => {
+        return (
+          <tr key={item.name}>
+            <td>{item.name}</td>
+            {rowStoreValues(item.stores)}
+          </tr>
+        )
+      })
+      setPriceList(list)
+    }
   }, [itemPriceTable])
 
   if (priceList === null) {
@@ -65,6 +72,16 @@ const Prices = props => {
       <Spinner className='my-3 mx-auto d-block' animation="border" variant='primary' role="status">
         <span className="sr-only">Loading...</span>
       </Spinner>
+    )
+  } else if (priceList.length < 1) {
+    return (
+      <Fragment>
+        <h1>Price list</h1>
+        <CreatePrice user={props.user} msgAlert={props.msgAlert} setChange={setChange}/>
+        <div className='container d-flex justify-content-center'>
+          <h5 className='text-muted'>No prices found. Create some above!</h5>
+        </div>
+      </Fragment>
     )
   } else {
     return (

@@ -1,0 +1,25 @@
+.input-body {
+  position: relative;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+
+@media (max-width: 500px) {
+  .input-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+  }
+  
+  .create-form-submit {
+    display: block;
+    width: 100px;
+    margin: auto;
+    text-align: center;
+  }
+}

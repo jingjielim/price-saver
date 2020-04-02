@@ -1,9 +1,9 @@
 import React from 'react'
 import AutoComplete from '../AutoComplete/AutoComplete'
-
+import './PriceForm.css'
 const PriceForm = ({ price, handleSubmit, handleChange, storeNames, itemNames, submitted }) => {
   return (
-    <form autoComplete='off' className='form-inline text-center d-flex justify-content-center' onSubmit={handleSubmit}>
+    <form autoComplete='off' className='form-inline text-center d-flex justify-content-center mb-2' onSubmit={handleSubmit}>
       <div className='input-body'>
         <div className='input-group input-group-sm mt-2 mr-2'>
           <label className='sr-only'>Add new price</label>
@@ -42,7 +42,7 @@ const PriceForm = ({ price, handleSubmit, handleChange, storeNames, itemNames, s
           submitted={submitted}
         />
       </div>
-      <button className='btn btn-primary btn-sm mt-2 ' type='submit'>Submit</button>
+      <button className='btn btn-primary btn-sm mt-2 create-form-submit' type='submit'>Submit</button>
     </form>
   )
 }

@@ -20,7 +20,6 @@ const Home = props => {
     indexStores(props.user)
       .then(res => {
         const { stores } = res.data
-        console.log(stores)
         setStores(stores.map(store => store.name))
       })
       .catch(error => props.msgAlert({
@@ -95,11 +94,11 @@ const Home = props => {
             <CreatePrice user={props.user} msgAlert={props.msgAlert} setChange={setChange}/>
           </div>
           <div className='row d-flex justify-content-center align-items-center'>
-            <div className='mt-3 mr-1 mb-0 filter-words'>Cheapest items at:</div>
+            <div className='mb-2 mr-1 mb-0 filter-words'>Cheapest items at:</div>
             <HomeButtons stores={stores} handleStoreFilter={handleStoreFilter}/>
           </div>
           <div className='row justify-content-center'>
-            <input className='form-control form-control-sm mt-3 mr-1 search-bar' onChange={handleSearchChange} placeholder='Search items' value={searchValue} />
+            <input className='form-control form-control-sm mb-2 search-bar' onChange={handleSearchChange} placeholder='Search items' value={searchValue} />
           </div>
           <div className='row'>
             {cards}
