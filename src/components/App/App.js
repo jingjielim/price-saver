@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom'
 import AuthenticatedRoute from '../AuthenticatedRoute/AuthenticatedRoute'
 import AutoDismissAlert from '../AutoDismissAlert/AutoDismissAlert'
 import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
@@ -43,7 +44,7 @@ class App extends Component {
 
   render () {
     const { msgAlerts, user } = this.state
-
+    const date = new Date()
     return (
       <Fragment>
         <Header user={user} />
@@ -90,6 +91,7 @@ class App extends Component {
             <Prices msgAlert={this.msgAlert} user={user} />
           )} />
         </main>
+        <Footer date={date}/>
       </Fragment>
     )
   }
