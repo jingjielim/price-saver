@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import './AutoComplete.scss'
 
-const Autocomplete = ({ name, classes, placeholder, suggestions = [], submitted }) => {
+const Autocomplete = ({ name, inputType, classes, placeholder, suggestions = [], submitted }) => {
   // The active selection's index
   const [activeSuggestion, setActiveSuggestion] = useState(0)
   // The suggestions that match the user's input
@@ -124,7 +124,7 @@ const Autocomplete = ({ name, classes, placeholder, suggestions = [], submitted 
     } else {
       suggestionsListComponent = (
         <div className='no-suggestions'>
-          <em>No similar names </em>
+          <em>{inputType} does not exist. Create in the `{inputType}s` tab.</em>
         </div>
       )
     }

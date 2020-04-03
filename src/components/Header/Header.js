@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 // <Nav.Link href="#create-item">Add Item</Nav.Link>
 const authenticatedOptions = (
   <Fragment>
+    <Nav.Link href="#home">Home</Nav.Link>
     <Nav.Link href="#prices">Prices</Nav.Link>
     <Nav.Link href="#items">Items</Nav.Link>
     <Nav.Link href="#stores">Stores</Nav.Link>

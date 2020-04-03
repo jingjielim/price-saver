@@ -20,7 +20,11 @@ const Home = props => {
     indexStores(props.user)
       .then(res => {
         const { stores } = res.data
-        setStores(stores.map(store => store.name))
+        if (stores.length > 0) {
+          setStores(stores.map(store => store.name))
+        } else {
+          setStores([])
+        }
       })
       .catch(error => props.msgAlert({
         heading: 'Load Stores Failure ' + error.message,
@@ -33,7 +37,11 @@ const Home = props => {
     indexItems(props.user)
       .then(res => {
         const { items } = res.data
-        setItems(items)
+        if (items.length > 0) {
+          setItems(items)
+        } else {
+          setCards([])
+        }
       })
       .catch(error => props.msgAlert({
         heading: 'Load Home Page Failure ' + error.message,
@@ -43,10 +51,12 @@ const Home = props => {
   }, [change])
   // Put each item into cards, refresh when items, storefilter or searchValue changes
   useEffect(() => {
-    const cards = items.map(item => {
-      return <HomeCard key={item.id} item={item} storeFilter={storeFilter} searchValue={searchValue} searchRegex={searchRegex} />
-    })
-    setCards(cards)
+    if (items.length > 0) {
+      const cards = items.map(item => {
+        return <HomeCard key={item.id} item={item} storeFilter={storeFilter} searchValue={searchValue} searchRegex={searchRegex} />
+      })
+      setCards(cards)
+    }
   }, [items, storeFilter, searchValue])
 
   // handle deleting of items
@@ -82,9 +92,21 @@ const Home = props => {
 
   if (cards === null || stores === null) {
     return (
-      <Spinner className='m-auto d-block' animation="border" variant='primary' role="status">
-        <span className="sr-only">Loading...</span>
-      </Spinner>
+      <div className='container'>
+        <div style={{ height: '100px' }} className='row'>
+          <Spinner className='m-auto d-block' animation="border" variant='primary' role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      </div>
+    )
+  } else if (cards.length < 1 || stores.length < 1) {
+    return (
+      <div className='container'>
+        <div style={{ height: '100px' }} className='row'>
+          <h2 className='text-muted my-auto'>Add at least 1 Item in the `Items` tab and 1 Store in the `Store` tab</h2>
+        </div>
+      </div>
     )
   } else {
     return (

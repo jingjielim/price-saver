@@ -15,8 +15,8 @@ const Prices = props => {
   useEffect(() => {
     indexPrices(props.user)
       .then(res => {
-        if (res.data !== ' ') {
-          setItemPriceTable(res.data)
+        if (res.data.prices.length > 0) {
+          setItemPriceTable(res.data.prices)
         } else {
           setItemPriceTable([])
           setPriceList([])

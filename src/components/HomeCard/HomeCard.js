@@ -50,10 +50,10 @@ const HomeCard = ({ item, storeFilter, searchValue, searchRegex, handleDelete })
           <Card.Header className='font-weight-bold'>{item.name}</Card.Header>
           <Card.Body>
             <Card.Title className={item.lowest.price ? 'cheapest' : null}>{item.lowest.price ? `$${item.lowest.price}/${item.unit}` : 'No price yet'}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">{item.lowest.price ? item.lowest.store : null }</Card.Subtitle>
+            <Card.Subtitle className="mb-2">{item.lowest.price ? item.lowest.store : null }</Card.Subtitle>
           </Card.Body>
           {cardTable}
-          <Card.Footer className='text-muted small'>
+          <Card.Footer className='small'>
             Last updated: {lastUpdated !== null ? lastUpdated : '-'}
           </Card.Footer>
         </Card>

@@ -1,11 +1,16 @@
-$primary: #111e6c;
+$secondary: #56ab2f;
+$primary: #0b6623;
 $danger: #b80f0a;
-
+$info: #a8e063;
+$muted: #e0dedc;
+$dark: #28521d;
 @import '~bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
 
 body {
   font-family: 'Open Sans', sans-serif;
+  color: $dark;
+  height: 100vh;
 }
 
 h1, h2, h3 {
@@ -13,17 +18,53 @@ h1, h2, h3 {
 }
 
 .cheapest {
-  color: $danger;
+  color: $secondary;
 }
 
 .selected {
-  color: $primary;
+  color: $secondary;
   background-color: white;
-  border-color: $primary;
+  border-color: $secondary;
   
   &:hover {
-    color: $primary;
+    color: $secondary;
     background-color: white;
-    border-color: $primary;
+    border-color: $secondary;
   }
+}
+
+button {
+  color: $secondary;
+}
+
+.card-header {
+  background-color: $primary;
+  color: #fff;
+}
+
+.card-subtitle {
+  color: rgba(47, 99, 35, 0.5);
+}
+
+.card-footer {
+  background-color: $secondary;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(47, 99, 35, 0.1);
+}
+
+.table-hover tbody tr:hover {
+    color: $primary;
+    background-color: rgba(47, 99, 35, 0.15);
+}
+
+.table {
+  color: $dark;
+  text-indent: 3px;
+}
+
+.navbar {
+  background: linear-gradient(to right, $primary, $secondary);
 }

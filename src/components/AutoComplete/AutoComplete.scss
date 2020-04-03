@@ -1,3 +1,5 @@
+$primary: #0b6623;
+
 .no-suggestions {
   display: block;
   width: auto;
@@ -50,7 +52,7 @@
 
 .suggestion-active,
 .suggestions li:hover {
-  background-color: #111e6c;
+  background-color: $primary;
   color: #fff;
   cursor: pointer;
   font-weight: 700;

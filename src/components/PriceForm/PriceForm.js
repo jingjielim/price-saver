@@ -25,6 +25,7 @@ const PriceForm = ({ price, handleSubmit, handleChange, storeNames, itemNames, s
       <div className='input-body'>
         <label className='sr-only'>Store</label>
         <AutoComplete
+          inputType={'Store'}
           suggestions={storeNames}
           classes='form-control form-control-sm mt-2 mr-2'
           placeholder={'Store name'}
@@ -35,6 +36,7 @@ const PriceForm = ({ price, handleSubmit, handleChange, storeNames, itemNames, s
       <div className='input-body'>
         <label className='mt-2 mr-2 sr-only'>Item</label>
         <AutoComplete
+          inputType={'Item'}
           suggestions={itemNames}
           classes='form-control form-control-sm mt-2 mr-2'
           placeholder={'Item name'}
