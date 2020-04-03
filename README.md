@@ -37,7 +37,10 @@ Filters also allows you to see the cheapest items at each of the stores.
 ![FilterPriceSaver](https://media.git.generalassemb.ly/user/25408/files/ad5a7f00-753f-11ea-947e-d7f79f927736)
 </kbd>
 
-
+Quickly find the item you want to add with autocomplete for store and item names.
+<kbd>
+![AutoCompletePriceSaver](https://user-images.githubusercontent.com/16698481/78325676-49878480-7546-11ea-82b0-69c080388b3a.gif)
+</kbd>
 ## Planning Process
 
 ### Wireframes
@@ -86,6 +89,10 @@ Following these basic ideas, I started to code the backend API to CRUD the resou
 After successful CRUD for each resource, I started to customise the output returned by the resource to fit this use case.
 
 Finally, styles were added using Bootstrap and react-bootstrap.
+
+#### Problem Solving
+
+In the first full stack app, I used Isotope to filter and search for items. 
 
 ## For Future Versions
 
