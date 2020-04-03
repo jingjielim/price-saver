@@ -27,7 +27,7 @@ For all the price conscious consumers out there. This app helps you remember and
 
 ## Application highlights
 
-Once you sign in, you will be able to see all your saved items and their prices at one glance. A live search function allows you to quickly narrow down the price of the item you require
+Once you sign in, you will be able to see all your saved items and their prices at one glance. A live search function allows you to quickly narrow down the price of the item you require.
 <kbd>
 ![LiveSearchPriceSaver](https://media.git.generalassemb.ly/user/25408/files/2efddd00-753f-11ea-94f0-8d8d563e32cf)
 </kbd>
@@ -37,7 +37,7 @@ Filters also allows you to see the cheapest items at each of the stores.
 ![FilterPriceSaver](https://media.git.generalassemb.ly/user/25408/files/ad5a7f00-753f-11ea-947e-d7f79f927736)
 </kbd>
 
-Quickly find the item you want to add with autocomplete for store and item names.
+Autocomplete for store and item names allows you to quickly locate the item you want to add.
 <kbd>
 ![AutoCompletePriceSaver](https://user-images.githubusercontent.com/16698481/78325676-49878480-7546-11ea-82b0-69c080388b3a.gif)
 </kbd>
@@ -62,12 +62,12 @@ Quickly find the item you want to add with autocomplete for store and item names
 </kbd>
 
 ### User stories
-- As a user, I want to be able to see all my items tracked
-- As a user, I want to always see the lowest price store for each item
-- As a user, I want to be able to update the price when it changes in store
-- As a user, I want to see prices from other stores as well
-- As a user, I want to be able to add new items
-- As a user, I want to be able to add new stores
+- As a user, I want to be able to see all my items tracked.
+- As a user, I want to always see the lowest price store for each item.
+- As a user, I want to be able to update the price when it changes in store.
+- As a user, I want to see prices from other stores as well.
+- As a user, I want to be able to add new items.
+- As a user, I want to be able to add new stores.
 - As a user, I want to be able to add new prices. When adding a new price, if the item or store is not in the database, a new item or store will be created.
 
 ### Process
