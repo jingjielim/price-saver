@@ -8,6 +8,7 @@ For all the price conscious consumers out there. This app helps you remember and
 ### Technologies
 
 - React
+- React Hooks
 - Ruby on Rails
 - Bootstrap
 - JavaScript
@@ -92,7 +93,7 @@ Finally, styles were added using Bootstrap and react-bootstrap.
 
 #### Problem Solving
 
-In the first full stack app, I used Isotope to filter and search for items. 
+A problem I had was what technology to use for the backend. Express vs Rails. Initially I wanted to use Express and MongoDB since it uses JavaScript for the backend and there are cool packages like socket.io that I wanted to try integrating with this project. But I could not think of a suitable way to represent the data in documents and retrieve them in an efficient manner. So I went with Rails and its SQL based database management system instead.
 
 ## For Future Versions
 

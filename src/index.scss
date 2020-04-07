@@ -4,16 +4,19 @@ $danger: #b80f0a;
 $info: #a8e063;
 $muted: #e0dedc;
 $dark: #28521d;
+$white: #fff;
 @import '~bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap');
 
 body {
-  font-family: 'Open Sans', sans-serif;
   color: $dark;
+  font-family: 'Open Sans', sans-serif;
   height: 100vh;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -22,14 +25,14 @@ h1, h2, h3 {
 }
 
 .selected {
-  color: $secondary;
-  background-color: white;
+  background-color: $white;
   border-color: $secondary;
-  
+  color: $secondary;
+
   &:hover {
-    color: $secondary;
-    background-color: white;
+    background-color: $white;
     border-color: $secondary;
+    color: $secondary;
   }
 }
 
@@ -39,7 +42,7 @@ button {
 
 .card-header {
   background-color: $primary;
-  color: #fff;
+  color: $white;
 }
 
 .card-subtitle {
@@ -52,12 +55,12 @@ button {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(47, 99, 35, 0.1);
+  background-color: rgba(47, 99, 35, 0.1);
 }
 
 .table-hover tbody tr:hover {
-    color: $primary;
-    background-color: rgba(47, 99, 35, 0.15);
+  background-color: rgba(47, 99, 35, 0.15);
+  color: $primary;
 }
 
 .table {

@@ -27,7 +27,6 @@ const Autocomplete = ({ name, inputType, classes, placeholder, suggestions = [],
       suggestion =>
         suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     )
-
     // Update the user input and filtered suggestions, reset the active
     // suggestion and make sure the suggestions are shown
     setActiveSuggestion(0)
@@ -43,12 +42,6 @@ const Autocomplete = ({ name, inputType, classes, placeholder, suggestions = [],
     setFilteredSuggestions([])
     setShowSuggestions(false)
     setUserInput(e.currentTarget.innerText)
-    // this.setState({
-    //   activeSuggestion: 0,
-    //   filteredSuggestions: [],
-    //   showSuggestions: false,
-    //   userInput: e.currentTarget.innerText
-    // })
   }
 
   // Event fired when the user presses a key down
@@ -59,41 +52,20 @@ const Autocomplete = ({ name, inputType, classes, placeholder, suggestions = [],
       setActiveSuggestion(0)
       setShowSuggestions(false)
       setUserInput(filteredSuggestions[activeSuggestion])
-      // this.setState({
-      //   activeSuggestion: 0,
-      //   showSuggestions: false,
-      //   userInput: filteredSuggestions[activeSuggestion]
-      // })
-
     // User pressed the up arrow, decrement the index
     } else if (e.keyCode === 38) {
       if (activeSuggestion === 0) {
         return
       }
       setActiveSuggestion(activeSuggestion => activeSuggestion - 1)
-      // this.setState({ activeSuggestion: activeSuggestion - 1 })
-
     // User pressed the down arrow, increment the index
     } else if (e.keyCode === 40) {
       if (activeSuggestion - 1 === filteredSuggestions.length) {
         return
       }
       setActiveSuggestion(activeSuggestion => activeSuggestion + 1)
-      // this.setState({ activeSuggestion: activeSuggestion + 1 })
     }
   }
-
-  // const {
-  //   onChange,
-  //   onClick,
-  //   onKeyDown,
-  //   state: {
-  //     activeSuggestion,
-  //     filteredSuggestions,
-  //     showSuggestions,
-  //     userInput
-  //   }
-  // } = this
 
   let suggestionsListComponent
 
