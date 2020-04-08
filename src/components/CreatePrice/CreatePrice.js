@@ -85,7 +85,6 @@ const CreatePrice = props => {
     const updatedField = {
       [event.target.name]: event.target.value
     }
-    console.log(updatedField)
     const editedPrice = Object.assign({}, price, updatedField)
     setPrice(editedPrice)
   }
