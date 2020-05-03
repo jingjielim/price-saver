@@ -102,9 +102,9 @@ const Home = props => {
     )
   } else if (cards.length < 1 || stores.length < 1) {
     return (
-      <div className='container'>
+      <div className='container mt-2'>
         <div style={{ height: '100px' }} className='row'>
-          <h2 className='text-muted my-auto'>Add at least 1 Item in the `Items` tab and 1 Store in the `Store` tab</h2>
+          <h2 className='text-muted my-auto text-center'>Add at least 1 Item in the `Items` tab and 1 Store in the `Store` tab</h2>
         </div>
       </div>
     )

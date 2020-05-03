@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 
 import { signIn } from '../../api/auth'
 import messages from '../AutoDismissAlert/messages'
+import Footer from '../Footer/Footer'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -47,6 +48,7 @@ class SignIn extends Component {
 
   render () {
     const { email, password } = this.state
+    const date = new Date()
 
     if (this.props.user) {
       return null
@@ -86,6 +88,7 @@ class SignIn extends Component {
               Submit
             </Button>
           </Form>
+          <Footer date={date}/>
         </div>
       </div>
     )

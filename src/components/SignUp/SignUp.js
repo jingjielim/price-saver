@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 
 import { signUp, signIn } from '../../api/auth'
 import messages from '../AutoDismissAlert/messages'
+import Footer from '../Footer/Footer'
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -48,7 +49,7 @@ class SignUp extends Component {
 
   render () {
     const { email, password, passwordConfirmation } = this.state
-
+    const date = new Date()
     return (
       <div className="row">
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
@@ -95,6 +96,7 @@ class SignUp extends Component {
             </Button>
           </Form>
         </div>
+        <Footer date={date}/>
       </div>
     )
   }
